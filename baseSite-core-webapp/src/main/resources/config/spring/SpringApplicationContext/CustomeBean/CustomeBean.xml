@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+    <!--  <import resource="SystemConfig/ConfigDataParser.xml" /> -->    <!-- 系统自定义配置组件模块的结构bean, config对象解析器bean-->
+</beans>

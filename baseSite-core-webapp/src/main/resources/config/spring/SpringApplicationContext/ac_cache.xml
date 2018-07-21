@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+    <!--****** ******* Ehcache配置*************start************ -->
+    <bean id="defaultEhcacheBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>classpath:config/cache/Ehcache.xml</value>
+        </property>
+    </bean>
+
+    <bean id="springEhcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager">
+            <ref bean="defaultEhcacheBean"/>
+        </property>
+
+    </bean>
+    <!--****** ******* Ehcache配置*************end************ -->
+
+    <!-- ****** *******memcache配置*************start*********** -->
+    <bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
+        <property name="servers" value="memcache.thesunboy.com:11211"/>
+        <property name="protocol" value="BINARY"/>
+        <property name="transcoder">
+            <bean class="net.spy.memcached.transcoders.SerializingTranscoder">
+                <property name="compressionThreshold" value="1024"/>
+            </bean>
+        </property>
+        <property name="opTimeout" value="1000"/>
+        <property name="timeoutExceptionThreshold" value="1998"/>
+        <property name="hashAlg">
+            <value type="net.spy.memcached.DefaultHashAlgorithm">KETAMA_HASH</value>
+        </property>
+        <property name="locatorType" value="CONSISTENT"/>
+        <property name="failureMode" value="Redistribute"/>
+        <property name="useNagleAlgorithm" value="false"/>
+    </bean>
+    <!--  ****** *******memcache配置*************end************* -->
+
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!--
+    <import resource="SpringMVC/aspectNotifAOP.xml" /> spring aop -->
+
+    <import resource="SpringMVC/ComponentScan.xml"/><!-- springMVC的组件扫描 -->
+
+    <!-- <import resource="SpringMVC/Interceptors.xml" /> --><!-- 拦截器相关 -->
+
+    <!-- <import resource="SpringMVC/StaticFiles.xml" /> --> <!-- 静态文件访问 -->
+
+    <import resource="SpringMVC/exceptionResolver.xml"/> <!-- 错误异常处理装向页面 -->
+
+    <import resource="SpringMVC/AnnotationDriven.xml"/> <!-- 注解驱动,用于增强controller和格式转换器以及校验器的支持 -->
+
+    <import resource="SpringMVC/ViewResolver.xml"/> <!-- 视图解析器 -->
+
+    <!-- <import resource="SpringMVC/ThemeResolver.xml" /> --> <!-- 动态系统主题解析器 -->
+
+    <import resource="SpringMVC/requestMethodHandlerAdapter.xml"/> <!-- 请求处理适配器 -->
+
+    <!-- <import resource="SpringMVC/webSocket.xml" /> --> <!-- webSocket -->
+
+
+</beans>

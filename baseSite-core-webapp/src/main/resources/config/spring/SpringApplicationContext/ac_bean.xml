@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+
+
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+    <import resource="CustomeBean/CustomeBean.xml"/><!-- 自定义的一些系统组件模块使用的bean -->
+
+    <!--
+        不在使用此方法获取spring上下文Context了.因为此时上下文并没有装载完bean,且该方法也获取不到spring的其他组件比如mvc
+    <bean id="applicationContextHelper" class="com.thesunboy.site.core.commons.Utils.SpringApplicationContext"></bean>
+      -->
+    <!-- spring组件扫描,自动装配被spring注解标注的类,方法,变量等 -->
+    <!--自动扫描并装载所有各种类型的注解,但是排除controller注解,,因为这是在springMVC中装配的 -->
+    <!-- 想法二:  这里还要排除掉service层,因为该层是在aop中配置的 ,将有aop中生成代理的对象,此想法是错误的.-->
+    <!-- 想法二: 错误原因是,对代理模式还不够熟,忘记了,在创建代理对象之前还必须有原生的对象才可以,所以service对象是不可以排除的,所以需要先使用包扫描,之后创建bean对象之后,使用aop的代理功能创建service的代理对象 -->
+
+    <!-- 分层组件扫描有利于模块之间的解耦调试, -->
+
+
+    <!-- WebSite组件层扫描 -->
+    <context:component-scan base-package="com.thesunboy.site.core.Component" annotation-config="true">
+    </context:component-scan>
+    <!-- 配置组件模块.临时使用 ,等后期写好了,在移到componetnt包中 -->
+    <context:component-scan base-package="com.thesunboy.site.core.config" annotation-config="true">
+    </context:component-scan>
+
+    <!-- 系统业务层 -->
+    <context:component-scan base-package="com.thesunboy.site.core.system" annotation-config="true">
+        <!--
+        <context:exclude-filter type="regex"
+        expression="com.thesunboy.site.core.system.Services.*" />
+         -->
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- SpringSecurity安全框架组件层 -->
+    <context:component-scan base-package="com.thesunboy.site.core.security" annotation-config="true">
+
+    </context:component-scan>
+
+    <!-- 微信组件注解扫描 -->
+    <!--   <context:component-scan base-package="com.thesunboy.weixin.core" annotation-config="true" >
+
+                <context:exclude-filter type="regex"
+                expression="com.thesunboy.site.core.system.Services.*" />
+                 <context:exclude-filter type="annotation"
+                expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>   -->
+
+    <context:component-scan base-package="com.zhifubao.test" annotation-config="true">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 配置模板引擎实例org.apache.velocity.app.VelocityEngine -->
+    <!--  <bean id="velocityEngineFactoryBean" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
+            配置文件所在路径
+        <property name="configLocation" >
+            <value>classpath:config/Velocity/velocity.properties</value>
+        </property>
+
+        配置文件所在路径
+       <property name="resourceLoaderPath">
+       <value>classpath:Template/Velocity_Vms</value>
+       </property>
+    </bean> -->
+
+
+</beans>

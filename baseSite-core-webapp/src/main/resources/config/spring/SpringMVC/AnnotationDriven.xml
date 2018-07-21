@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+
+    <!-- 当配置了 default-servlet-handler 这个默认处理serlvet 需要在配置这个驱动,要不然controller不能被正确的解析,顺便为controller的入参配置类型转化器-->
+    <!-- 关于该条配置,具体参见 视频 36 尚桂谷 springMVC annotation-driven的配置 -->
+    <mvc:annotation-driven validator="springValidator" conversion-service="conversionService"/>
+
+    <!-- 格式化和转化器 -->
+    <!--<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+          <property name="converters">
+                 <list>
+                     <bean class="com.thesunboy.site.core.system.Convert.Convert_StringToDatetime"/>
+                 </list>
+         </property>
+      </bean> -->
+
+    <!-- 全局默认生成校验对像, 用于controller引用 -->
+    <bean id="springValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+
+</beans>

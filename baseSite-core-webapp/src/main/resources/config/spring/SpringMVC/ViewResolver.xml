@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+    <!-- jsp视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 按bean 名称找view视图解析器, 优先级排序10 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="10"/>
+
+
+</beans>

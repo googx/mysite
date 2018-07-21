@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+    <!-- 错误解析器 发生错误默认会跳转到/web-inf/views/timeout.jsp -->
+    <!-- <bean id="exceptionResolver"
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error/exception" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.funo.framework.exceptions.DuplicateFormSubmitException">error/duplicateFormSubmitException</prop>
+                <prop key="com.funo.framework.exceptions.ForbidVisitException">error/ForbidVisitException</prop>
+                <prop key="com.funo.framework.exceptions.NotLoginException">error/NotLoginException</prop>
+                <prop key="java.sql.SQLException">error/exception</prop>
+                <prop key="org.springframework.transaction.TransactionException">error/exception</prop>
+                <prop key="org.springframework.dao.DataAccessException">error/exception</prop>
+                <prop key="java.lang.RuntimeException">error/exception</prop>
+            </props>
+        </property>
+    </bean> -->
+
+
+</beans>

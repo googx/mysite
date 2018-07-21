@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+    <!-- ===start===start=====web应用默认的静态资源处理===start===start===== -->
+    <!-- springMVC提供两种解决方案:其一使用mvc:resources  其二使用: mvc:default-servlet-handler-->
+
+    <!-- 1. 第一种方法弃用-->
+    <bean id="rpe" class="com.thesunboy.site.core.Component.ResourcePathAware" init-method="init"/>
+
+    <!-- mapping指的是逻辑路径即请求的url路径而,location是实际的物理路径相对于webApp下的磁盘路径 -->
+    <mvc:resources mapping="#{rpe.resourceMap}/**" location="/resource/"/>
+    <!-- 	<mvc:resources mapping="#{rpe.resourceMap}/**" location="/commons/" />                             -->
+    <!-- <mvc:resources mapping="#{rpe.resourceWebRoot}/**" location="/" /> -->
+    <!-- 系统基础(css,js)静态文件由nginx前端负责,且一般情况走cdn, 应用模板类,上传的文件临时存放点走系统静态servlet -->
+    <!--2. 将对静态资源的请求,交由web项目中默认的servlet处理,如果不存在默认的servlet,则需要配置一个属性 default-servlet-name="staticResouces" 以显示的指定某一个servlet -->
+    <mvc:default-servlet-handler/>
+    <!-- ===End===End=====web应用默认的静态资源处理===End===End===== -->
+
+</beans>

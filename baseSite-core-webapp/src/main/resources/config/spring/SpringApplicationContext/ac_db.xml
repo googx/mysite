@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+    <!-- 使用c3p0作为代理连接数据库,配置数据源 -->
+    <bean id="c3p0DateSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.connection.driver_class}"/>
+        <property name="jdbcUrl" value="${jdbc.connection.url}"/>
+        <property name="user" value="${jdbc.connection.username}"/>
+        <property name="password" value="${jdbc.connection.password}"/>
+        <property name="minPoolSize" value="${jdbc.c3p0.minPoolSize}"/>
+        <property name="maxPoolSize" value="${jdbc.c3p0.maxPoolSize}"/>
+        <property name="initialPoolSize" value="${jdbc.c3p0.initialPoolSize}"/>
+        <property name="maxIdleTime" value="${jdbc.c3p0.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${jdbc.c3p0.acquireIncrement}"/>
+        <property name="maxStatements" value="${jdbc.c3p0.maxStatements}"/>
+        <property name="idleConnectionTestPeriod" value="${jdbc.c3p0.idleConnectionTestPeriod}"/>
+        <property name="acquireRetryAttempts" value="${jdbc.c3p0.acquireRetryAttempts}"/>
+        <property name="breakAfterAcquireFailure" value="${jdbc.c3p0.breakAfterAcquireFailure}"/>
+        <property name="testConnectionOnCheckout" value="${jdbc.c3p0.testConnectionOnCheckout}"/>
+    </bean>
+
+    <!-- 以上是数据源配置,下面是相关数据持久化框架的配置 , 第二个重构版本,我使用mybatis-->
+
+
+    <!-- 配置Spring的jdbc,这个bean的id将被用来在java代码中使用注解 @Autowired自动装箱 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="c3p0DateSource"/>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:com/thesunboy/site/**/dao/impl/*.xml"></property>
+        <property name="typeAliasesPackage" value="com.thesunboy.core.pojo;"/><!-- 扫描实体包,支持多个地址 -->
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage">
+            <!-- 等后面在看下能否使用通配符来表达 -->
+            <value>com.thesunboy.site.core.dao.mapper</value>
+        </property>
+        <!-- 根据该字段(sqlSessionFactory)的注释说明,只有在spring中存在多个sqlsession实例时才需要指定,否则,mybatis会自动注入唯一的sqlSessionFactory -->
+        <!-- <property name="sqlSessionFactory" value="sqlSessionFactory"></property> -->
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+          scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+</beans>

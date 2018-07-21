@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!-- 系统主题解析器,通过使用这个配置,来对系统增强使用动态系统主题的功能  -->
+
+    <bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
+        <property name="defaultThemeName" value="defaultTheme"></property>
+    </bean>
+
+
+</beans>

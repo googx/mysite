@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+
+    <!-- 虽然已经在spring的ioc中配置了AOP的扫描,但是由于是配置在spring中的,对springMVC中的没有扫描到,所以此处配置的切面仅用于SpringMVC中扫描到的Controller层 -->
+
+    <!--问题一:  先试试这样写,与spring中起相同的id名,会不会出错?,
+     结论: 不会出错,但是创建了两个切面实例, -->
+
+    <!--问题二:  现在把在springMVC中声明的bean去掉,直接引用和springIOC容器中相同的ID名,看是否可以成功引用,如果可以,说明SpringMVC容器可以取到springIOC容器中的实例 ;
+            结论:由于springMVC容器在Spring容器之后启动,SpringMVC容器,可以直接引用在Srping容器中声明的bean对象-->
+    <!-- <bean id="loggerAspect" class="com.thesunboy.site.core.Component.Annotation.LoggerAspect"/>
+     -->
+
+    <!-- 问题三: 能否在一个切入点的定义中 ,定义多个不同的切面 -->
+    <bean id='loggerAspect' class="com.thesunboy.site.core.Component.Annotation.LoggerAspect"/>
+
+    <bean id="debugAspect" class="com.thesunboy.site.core.Component.Annotation.DebugAspect"></bean>
+
+    <aop:config proxy-target-class="true">
+
+        <!-- 定义一个切入点,供切面的使用 -->
+        <aop:pointcut id="springMVC_Controller" expression="execution(* com.thesunboy.site.core.system.Services.*.*.*(..))"/>
+
+        <!-- 定义一个日志记录切面 -->
+        <aop:aspect ref="loggerAspect">
+            <aop:before method="beforeLog" pointcut-ref="springMVC_Controller"/>
+        </aop:aspect>
+
+        <!-- 定义一个调试使用的切面 -->
+        <!-- <aop:aspect ref="debugAspect">
+            <aop:before method="beforeLog" pointcut-ref="springMVC_Controller"/>
+        </aop:aspect> -->
+
+    </aop:config>
+
+</beans>

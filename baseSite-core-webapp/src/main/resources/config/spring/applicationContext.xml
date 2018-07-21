@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+<!-- 使用正则匹配命名空间的地址 
+ http://www.springframework.org/schema/.+xsd
+
+ http://www.springframework.org替换成
+ http://www.springframework.org
+注意空格问题
+-->
+
+ <import resource="SpringApplicationContext/ac_bean.xml"/><!-- 需要装在bean直接使用的,所有spring注解扫描装载(排除controller注解),velocityEngine模板引擎工具,Quartz工厂bean -->
+ 
+<!--    <import resource="SpringApplicationContext/ac_Security.xml"/> -->       <!-- Spring security 配置文件 -->
+ 
+<!--  <import resource="SpringApplicationContext/ac_config.xml"/> --><!-- 一些properties等系统的配置文件需要装载的 -->
+ 
+<!--   <import resource="SpringApplicationContext/ac_db.xml"/> --><!-- 连接数据库方面的一些配置,jdbc,c3p0等 -->
+  
+ <!--  <import resource="SpringApplicationContext/ac_cache.xml"/> --><!-- 系统配置的集群缓存如:memcache,Ehcache等 -->
+ 
+   <!-- <import resource="SpringApplicationContext/ac_AspectNotif.xml"/>  --> <!--  SpringAOP面向切面  -->		
+  
+<!--    <import resource="SpringApplicationContext/ac_transaction.xml"/> -->  <!--  Spring 事务管理器 --><!-- 系统使用的service在现阶段并不需要开启.调试太麻烦了..以后需要在开启  -->
+  
+<!--   <import resource="SpringApplicationContext/ac_Job.xml"/> -->     <!--   Spring定时任务 --> 
+<!--   <import resource="SpringApplicationContext/ac_Quartz.xml"/>  -->   <!--   Quartz定时任务组件,该组件与spring组件不能共存 --> 
+  
+  
+</beans>

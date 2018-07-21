@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <beans>
+        <!-- 自定义对象的配置解析器 -->
+        <bean id="stringConfigDataParser" class="com.thesunboy.site.core.config.Parser.StringConfigDataParser"></bean>
+        <bean id="integerConfigDataParser" class="com.thesunboy.site.core.config.Parser.IntegerConfigDataParser"></bean>
+        <bean id="booleanConfigDataParser" class="com.thesunboy.site.core.config.Parser.BooleanConfigDataParser"></bean>
+        <bean id="longConfigDataParser" class="com.thesunboy.site.core.config.Parser.LongConfigDataParser"></bean>
+        <bean id="byteConfigDataParser" class="com.thesunboy.site.core.config.Parser.ByteConfigDataParser"></bean>
+        <bean id="floatConfigDataParser" class="com.thesunboy.site.core.config.Parser.FloatConfigDataParser"></bean>
+        <bean id="doubleConfigDataParser" class="com.thesunboy.site.core.config.Parser.DoubleConfigDataParser"></bean>
+        <bean id="shortConfigDataParser" class="com.thesunboy.site.core.config.Parser.ShortConfigDataParser"></bean>
+        <!-- 上面都是基本数据类型的配置解析器,下面是系统自定义数据类型解析器 -->
+
+        <bean id="dictItemConfigDataParser" class="com.thesunboy.site.core.config.Parser.DictItemConfigDataParser"></bean>
+        <bean id="wechatReqUrlConfigDataParser" class="com.thesunboy.weixin.core.config.WechatReqUrlConfigDataParser"></bean>
+
+
+    </beans>
+
+</beans>

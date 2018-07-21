@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!-- 配置list的properties文件集合,作为数据源,使之不用重复加载文件 -->
+    <bean id="propertyResources" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <value>classpath*:/config/spring/properties/db_conn.properties
+                </value>
+                <value>classpath*:/config/spring/properties/db_c3p0.properties
+                </value>
+                <!-- <value>classpath*:/config/system/Properties/errorCode.properties
+                </value> -->
+                <!-- <value>classpath:config/Velocity/velocity.properties</value> -->
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- 装载properties配置文件 -->
+    <bean id="propertiesConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <!-- <property name="ignoreResourceNotFound" value="true"></property> -->
+        <property name="locations">
+            <ref bean="propertyResources"/>
+        </property>
+    </bean>
+    <!-- <util:properties id="cfg_ConfigMapping"
+        location="classpath:/config/system/Properties/ConfigMapping.properties"></util:properties>
+    <util:properties id="cfg_defaultSystemConfig"
+        location="classpath:/config/system/Properties/DefaultSystemConfig.properties"></util:properties>
+    <util:properties id="cfg_defaultWeChatConfig"
+        location="classpath:/config/system/Properties/DefaultWeChatConfig.properties"></util:properties>
+    <util:properties id="cfg_defaultQuartzConfig"
+        location="classpath:/config/system/Properties/DefaultQuartzConfig.properties"></util:properties>
+    <util:properties id="cfg_defaultSecurityConfig"
+        location="classpath:/config/system/Properties/DefaultSecurityConfig.properties"></util:properties>
+    <util:properties id="cfg_errorCode"
+        location="classpath:/config/system/Properties/errorCode.properties"></util:properties> -->
+
+    <!-- 读取单一文件 <util:properties id="propertiesReader" location="classpath:test.properties"
+        /> -->
+    <!-- 读取多个自定义properties配置文件 -->
+    <!-- <bean id="propertiesReader" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations"> <list> <value>classpath:/config/system/Properties/errorCode.properties</value>
+        </list> </property> </bean> -->
+
+</beans>

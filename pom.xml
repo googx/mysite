@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.thesunboy.site</groupId>
+    <artifactId>mysite</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <!--配置生成源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--配置生成Javadoc包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <aggregate>true</aggregate>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <properties>
+        <!-- 项目模块版本控制 ,新增依赖版本理应这里加入控制 -->
+        <version-mysite>0.0.1-SNAPSHOT</version-mysite>
+        <version-mysite-baseSite-core-api>0.0.1-SNAPSHOT</version-mysite-baseSite-core-api>
+        <version-mysite-baseSite-core-impl>0.0.1-SNAPSHOT</version-mysite-baseSite-core-impl>
+        <version-mysite-baseSite-core-commons>0.0.1-SNAPSHOT</version-mysite-baseSite-core-commons>
+        <version-mysite-baseSite-core-plugins>0.0.1-SNAPSHOT</version-mysite-baseSite-core-plugins>
+        <version-mysite-baseSite-core-webapp>0.0.1-SNAPSHOT</version-mysite-baseSite-core-webapp>
+        <version-mysite-baseSite-core-pojo>0.0.1-SNAPSHOT</version-mysite-baseSite-core-pojo>
+        <version-mysite-baseSite-test>0.0.1-SNAPSHOT</version-mysite-baseSite-test>
+        <version-mysite-baseSite-core-exception>0.0.1-SNAPSHOT</version-mysite-baseSite-core-exception>
+        <version-mysite-baseSite-core-cache>0.0.1-SNAPSHOT</version-mysite-baseSite-core-cache>
+        <version-mysite-baseSite-core-springSecurity>0.0.1-SNAPSHOT</version-mysite-baseSite-core-springSecurity>
+        <version-mysite-baseSite-core-message>0.0.1-SNAPSHOT</version-mysite-baseSite-core-message>
+
+        <!-- 以下是第三方 -->
+        <apache-lang3>3.1</apache-lang3>
+        <spring.version>4.2.0.RELEASE</spring.version>
+        <spring-security.version>4.0.1.RELEASE</spring-security.version>
+        <version-jackson>2.8.8</version-jackson>
+        <version-myLog>1.0.0</version-myLog>
+        <version-commons-lang3>3.3.2</version-commons-lang3>
+        <version-apache-httpclient>4.5.3</version-apache-httpclient>
+        <version-apache-httpcore>4.4.6</version-apache-httpcore>
+        <version-commons-logging>1.2</version-commons-logging>
+        <version-commons-codec>1.9</version-commons-codec>
+        <version-netty>4.1.22.Final</version-netty>
+        <version-javax-websocket>1.1</version-javax-websocket>
+        <version-javaee-api>7.0</version-javaee-api>
+
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    </properties>
+
+
+    <modules>
+        <module>baseSite-core-api</module>
+        <module>baseSite-core-impl</module>
+        <module>baseSite-core-commons</module>
+        <module>baseSite-core-plugins</module>
+        <module>baseSite-core-webapp</module>
+        <module>baseSite-core-pojo</module>
+        <module>baseSite-test</module>
+        <module>baseSite-core-exception</module>
+        <module>baseSite-core-cache</module>
+        <module>baseSite-core-springSecurity</module>
+        <module>baseSite-core-message</module>
+        <module>baseSitecorespi</module>
+    </modules>
+
+
+    <!-- 项目部署 ,id要和maven-setting文件的server节点的id一致 -->
+    <!--<distributionManagement>-->
+    <!--<repository>-->
+    <!--<id>mysite-release</id>-->
+    <!--<name>mysite-release</name>-->
+    <!--<url>https://nexus.thesunboy.com/nexus/content/repositories/mysite</url>-->
+    <!--<uniqueVersion>true</uniqueVersion>-->
+    <!--</repository>-->
+    <!--<snapshotRepository>-->
+    <!--<id>mysite-snapshot</id>-->
+    <!--<name>mysite-snapshot</name>-->
+    <!--<url>https://nexus.thesunboy.com/nexus/content/repositories/mysite-snapshot</url>-->
+    <!--<uniqueVersion>true</uniqueVersion>-->
+    <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+
+    <!-- 子项目依赖 -->
+    <!-- 继承依赖,部分子模块不需要,子模块根据需要自行在显示声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-api</artifactId>
+                <version>${version-mysite-baseSite-core-api}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-impl</artifactId>
+                <version>${version-mysite-baseSite-core-impl}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-commons</artifactId>
+                <type>pom</type>
+                <version>${version-mysite-baseSite-core-commons}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-plugins</artifactId>
+                <version>${version-mysite-baseSite-core-plugins}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-webapp</artifactId>
+                <version>${version-mysite-baseSite-core-webapp}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-pojo</artifactId>
+                <version>${version-mysite-baseSite-core-pojo}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thesunboy.site</groupId>
+                <artifactId>baseSite-core-springSecurity</artifactId>
+                <version>${version-mysite-baseSite-core-springSecurity}</version>
+            </dependency>
+
+
+            <!-- 第三方jar包库或者框架 -->
+
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${version-apache-httpclient}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${version-apache-httpcore}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${version-commons-logging}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${version-javaee-api}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!--java ee 已经包含了jsp,jpa,servlet,el等规范,注意这些规范在对应的orm,springmvc,框架版本选择上要注意-->
+            <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+            <dependency>
+                <groupId>javax.websocket</groupId>
+                <artifactId>javax.websocket-api</artifactId>
+                <version>${version-javax-websocket}</version>
+                <scope>provided</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.14</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.14</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- Don't upgrade to 2.4+ until mybatis switches to java 7 -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.3</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- 各种加密算法和编码包 -->
+            <dependency>
+                <groupId>cryptix</groupId>
+                <artifactId>cryptix</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.10</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${version-netty}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <!-- 通用库依赖,所有子模块都需要的 -->
+    <dependencies>
+        <dependency>
+            <groupId>com.thesunboy.site</groupId>
+            <artifactId>baseSite-core-commons-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${version-jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${version-jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${version-jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version-commons-lang3}</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+
+
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!-- 只搜索@Controller 标注的类 不搜索其他标注的类 -->
+    <context:component-scan base-package="com.thesunboy.site.core.system.Controller,com.expenseInfo.app.system.Controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--  <context:component-scan base-package="com.thesunboy.site.core.Component"></context:component-scan>
+  -->
+    <!-- 对某些静态资源，如css,图片等进行过滤 ,有引用 "/resources/**" 的路径引用转到相应映射配置目录取资源 -->
+
+
+    <!-- ===start===start=====web应用默认的静态资源处理===start===start===== -->
+    <!-- springMVC提供两种解决方案:其一使用mvc:resources  其二使用: mvc:default-servlet-handler-->
+
+    <!-- 1. 第一种方法弃用-->
+    <bean id="rpe" class="com.thesunboy.site.core.Component.ResourcePathAware" init-method="init"/>
+
+    <!-- mapping指的是逻辑路径即请求的url路径而,location是实际的物理路径相对于webApp下的磁盘路径 -->
+    <mvc:resources mapping="#{rpe.resourceMap}/**" location="/resource/internet/"/>
+    <!-- 	<mvc:resources mapping="#{rpe.resourceMap}/**" location="/commons/" />                             -->
+    <!-- <mvc:resources mapping="#{rpe.resourceWebRoot}/**" location="/" /> -->
+
+    <!--2. 将对静态资源的请求,交由web项目中默认的servlet处理,如果不存在默认的servlet,则需要配置一个属性 default-servlet-name="staticResouces" 以显示的指定某一个servlet -->
+    <mvc:default-servlet-handler/>
+    <!-- ===End===End=====web应用默认的静态资源处理===End===End===== -->
+
+    <!-- 当配置了 default-servlet-handler 这个默认处理serlvet 需要在配置这个驱动,要不然controller不能被正确的解析,顺便为controller的入参配置类型转化器-->
+    <!-- 关于该条配置,具体参见 视频 36 尚桂谷 springMVC annotation-driven的配置 -->
+    <mvc:annotation-driven validator="springValidator" conversion-service="conversionService"/>
+
+    <!-- 格式化和转化器 -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="com.thesunboy.site.core.system.Convert.Convert_StringToDatetime"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 全局默认生成校验对像, 用于controller引用 -->
+    <bean id="springValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- jsp视图解析器 -->
+    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean> -->
+
+    <!-- 按bean 名称找view视图解析器, 优先级排序10 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="10"/>
+
+    <!-- 解析multipart Request 请求, 限制最大上传文件在小为100M, 请求编码格式UTF-8(默认ISO-8859-1) -->
+    <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>   
+        <property name="maxUploadSize" value="10485760000"></property>  
+        <property name="maxInMemorySize" value="40960"></property>
+        <property name="uploadTempDir" value="uploadRoot/temp"></property>    
+    </bean> -->
+
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter"/>
+    <bean id="formHttpMessageConverter" class="org.springframework.http.converter.FormHttpMessageConverter"/>
+
+    <!-- web client mock request -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringHttpMessageConverter"/>
+                <ref bean="formHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置测试拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.thesunboy.site.core.Component.Interceptor.MainInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <!-- excel VIEW视图 -->
+    <!-- <bean id="userListExcelView" class="com.funo.framework.commons.excel.UserListExcelView" /> -->
+
+    <!-- 针对类、方法级别的权限拦截器 -->
+    <!--<mvc:interceptors>
+
+    <mvc:interceptor>
+         <mvc:mapping path="/fileupload" />
+        <mvc:mapping path="/main*" />
+        <mvc:mapping path="/header*" />
+        <mvc:mapping path="/welcome*" />
+        <mvc:mapping path="/treeMenu*" />
+        <mvc:mapping path="/role**/**" />
+        <mvc:mapping path="/user**/**" />
+        <mvc:mapping path="/module**/**" />
+        <mvc:mapping path="/field**/**" />
+        <bean class="com.funo"></bean>
+    </mvc:interceptor>
+    -->
+
+
+    <!-- 配置token拦截器 -->
+    <!-- <mvc:interceptor>
+        <mvc:mapping path="/**/do**" />
+        <mvc:mapping path="/login" /> 验证用户登陆的token
+        <bean class="com.funo.framework.web.token.DenyDuplicateFormSubmitInterceptor" />
+    </mvc:interceptor>
+
+    <mvc:interceptor>
+        <mvc:mapping path="/**" />
+        <bean class="com.funo.framework.web.login.ForbidVisitInterceptor" />
+    </mvc:interceptor>
+</mvc:interceptors> -->
+
+
+    <!-- 错误解析器 发生错误默认会跳转到/web-inf/views/timeout.jsp -->
+    <!-- <bean id="exceptionResolver"
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error/exception" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.funo.framework.exceptions.DuplicateFormSubmitException">error/duplicateFormSubmitException</prop>
+                <prop key="com.funo.framework.exceptions.ForbidVisitException">error/ForbidVisitException</prop>
+                <prop key="com.funo.framework.exceptions.NotLoginException">error/NotLoginException</prop>
+                <prop key="java.sql.SQLException">error/exception</prop>
+                <prop key="org.springframework.transaction.TransactionException">error/exception</prop>
+                <prop key="org.springframework.dao.DataAccessException">error/exception</prop>
+                <prop key="java.lang.RuntimeException">error/exception</prop>
+            </props>
+        </property>
+    </bean> -->
+
+</beans>

@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.thesunboy.site</groupId>
+		<artifactId>baseSite-core-commons</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>baseSite-core-commons-core</artifactId>
+	<packaging>pom</packaging>
+	<build />
+
+	<dependencies>
+		<dependency>
+			<groupId>com.thesunboy.site</groupId>
+			<artifactId>baseSite-core-commons-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.thesunboy.utils.config</groupId>
+			<artifactId>easyConfig-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+
+	</dependencies>
+
+</project>

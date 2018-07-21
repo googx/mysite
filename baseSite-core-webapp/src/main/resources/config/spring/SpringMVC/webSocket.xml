@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
+
+    <bean id="testwebsocketHandler" class="com.thesunboy.site.core.webSocket.TestWebSocketHandler"/>
+    <bean id="testHandler" class="com.thesunboy.site.core.webSocket.TestHandler"/>
+    <bean id="webSocketInterceptor" class="com.thesunboy.site.core.Component.Interceptor.testWebSocketInterceptor"/>
+    <websocket:handlers>
+
+        <!-- 配置消息处理bean和路径的映射关系 -->
+        <websocket:mapping handler="testwebsocketHandler" path="/websocket/test"/>
+
+        <websocket:handshake-handler ref="testHandler"/>
+
+        <!-- 配置握手拦截器 -->
+        <websocket:handshake-interceptors>
+            <ref bean="webSocketInterceptor"/>
+        </websocket:handshake-interceptors>
+
+        <!-- 开启sockjs，去掉则关闭sockjs -->
+        <!--
+        如果去掉这一配置，则表示不开启sockjs，那么JavaScript客户端的调用就要采用标准的HTML的WebSocketAPI。
+        开启了sockjs，则要使用sockjs的javascript接口
+         -->
+        <!-- <websocket:sockjs client-library-url="http://rescdn.thesunboy.com/BaseSite/resource/internet/sockjs/sockjs-1.1.2.min.js"/> -->
+    </websocket:handlers>
+
+    <!-- 配置websocket消息的最大缓冲区长度 -->
+    <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+        <property name="maxTextMessageBufferSize" value="8192"/>
+        <property name="maxBinaryMessageBufferSize" value="8192"/>
+    </bean>
+
+</beans>

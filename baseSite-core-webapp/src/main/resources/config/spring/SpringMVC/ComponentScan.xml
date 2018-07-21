@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!-- 只搜索@Controller 标注的类 不搜索其他标注的类 -->
+    <!-- webSite系统Controller组件支持 -->
+    <context:component-scan base-package="com.thesunboy.site.core.system.Controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 微信组件Controller组件支持 -->
+    <!-- <context:component-scan base-package="com.thesunboy.weixin.core.Controller" use-default-filters="false">
+             <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+       </context:component-scan>   -->
+
+    <!-- 个人应用组件Controller组件支持 -->
+    <context:component-scan base-package="com.expenseInfo.app.system.Controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 获取支付宝个人信息Controller组件支持 -->
+    <context:component-scan base-package="com.zhifubao.test.Controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+</beans>
