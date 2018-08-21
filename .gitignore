@@ -1,6 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Emacs template
 # -*- mode: gitignore; -*-
+*.iml
+*.swp
+*.ipr
+*.iws
 *~
 \#*\#
 /.emacs.desktop
